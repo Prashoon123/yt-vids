@@ -12,7 +12,7 @@
 
 > Save your favorite YT Videos! 
 
-### 🏠 [Homepage](https://www.yt-vids.ml/)
+### 🏠 [Homepage](https://yt-vids.vercel.app/)
 
 ### ✨ [Demo on YouTube](https://www.youtube.com/watch?v=qaFKIX-2bUc) -
 
