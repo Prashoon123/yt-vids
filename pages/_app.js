@@ -24,6 +24,26 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <title>YT Vids</title>
         <link rel="icon" href="/logo-transparent.png" />
+        <meta
+          name="description"
+          content="Save your favorite YT Videos!"
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@prashoonb" />
+        <meta name="twitter:creator" content="@prashoonb" />
+        <meta property="og:title" content="YT Vids" />
+        <meta
+          property="og:description"
+          content="Save your favorite YT Videos!"
+        />
+        <meta property="og:url" content="https://www.yt-vids.ml/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="/logo.png" />
+        <meta property="og:image:alt" content="YT Vids" />
+        <meta property="og:image:width" content="500" />
+        <meta property="og:image:height" content="500" />
+        <meta property="og:site_name" content="YT Vids" />
+        <link rel="canonical" href="https://www.yt-vids.ml/" />
       </Head>
       <NextNProgress color={colors.primary} />
       <Component {...pageProps} />

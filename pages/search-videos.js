@@ -15,17 +15,15 @@ import FadingCircle from "better-react-spinkit/dist/FadingCircle";
 import colors from "../config/colors";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/router";
+import Fuse from "fuse.js";
 
-function Videos() {
+function SearchVideos() {
   const [user, loading, error] = useAuthState(auth);
-  const [videoUrl, setVideoUrl] = useState("");
-  const [videoTitle, setVideoTitle] = useState("");
+  const [title, setTitle] = useState("");
   const [videos, videoLoading] = useCollection(
-    query(
-      collection(db, "users", user?.uid || "1", "videos"),
-      orderBy("timestamp", "desc")
-    )
+    collection(db, "users", user?.uid || "1", "videos")
   );
+  const [searchedVideos, setSearchedVideos] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -44,31 +42,29 @@ function Videos() {
     );
   }
 
-  const addVideo = async (e) => {
+  const searchVideos = async (e) => {
     e.preventDefault();
 
-    const videoId = videoUrl.split("/");
+    const searchVideos = [];
 
-    if (!videoId[3]) {
-      return toast.error("The video URL is invalid!");
-    }
-
-    await addDoc(collection(db, "users", user?.uid, "videos"), {
-      videoUrl: `https://youtube.com/embed/${videoId[3]}`,
-      title: videoTitle,
-      createdBy: {
-        displayName: user?.displayName,
-        email: user?.email,
-        uid: user?.uid,
-        photoURL: user?.photoURL,
-      },
-      timestamp: serverTimestamp(),
-    }).then(() => {
-      setVideoUrl("");
-      setVideoTitle("");
-
-      toast.success("Added the video successfully!");
+    videos.forEach((video) => {
+      searchVideos.push({
+        title: video?.data()?.title,
+        videoUrl: video?.data()?.videoUrl,
+        id: video?.id,
+      });
     });
+
+    console.log(searchVideos);
+
+    const fuse = new Fuse(searchVideos, {
+      keys: ["title"],
+      includeScore: true,
+    });
+
+    const results = fuse.search(!title ? " " : title);
+
+    setSearchedVideos(results);
   };
 
   return (
@@ -76,32 +72,18 @@ function Videos() {
       <Header />
 
       <div>
-        <form onSubmit={addVideo}>
+        <form onSubmit={searchVideos}>
           <div className="m-6 flex justify-center items-center flex-col">
-            <label for="videoTitle" className="text-sm font-medium mb-2">
-              Enter video title
+            <label for="title" className="text-sm font-medium mb-2">
+              Enter the video's name
             </label>
             <input
               type="text"
-              id="videoTitle"
+              id="title"
               className="bg-gray-700 border border-gray-600 placeholder-gray-400 text-white rounded-lg focus:ring-2 outline-none focus:ring-green-400 focus:border-green-500 block w-1/4 p-2.5"
               required={true}
-              value={videoTitle}
-              onChange={(e) => setVideoTitle(e.target.value)}
-            />
-          </div>
-          <div className="m-6 flex justify-center items-center flex-col">
-            <label for="videoUrl" className="text-sm font-medium mb-2">
-              Enter video url
-            </label>
-            <input
-              type="text"
-              id="videoUrl"
-              placeholder="https://youtu.be/4Tm6Z1y3h94"
-              className="bg-gray-700 border border-gray-600 placeholder-gray-400 text-white rounded-lg focus:ring-2 outline-none focus:ring-green-400 focus:border-green-500 block w-1/4 p-2.5"
-              required={true}
-              value={videoUrl}
-              onChange={(e) => setVideoUrl(e.target.value)}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
           </div>
           <center>
@@ -109,17 +91,17 @@ function Videos() {
               type="submit"
               className="text-black bg-[#00C85F] focus:ring-4 focus:ring-green-400 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center self-center"
             >
-              Submit
+              Search
             </button>
           </center>
         </form>
       </div>
 
       <div className="flex justify-center items-center mt-6 flex-col m-2">
-        {videos?.docs?.length > 0 && (
+        {searchedVideos?.length > 0 && (
           <div className="bg-black p-6 rounded-xl">
-            {videos?.docs?.map((video) => (
-              <Video videoUrl={video?.data()?.videoUrl} id={video?.id} />
+            {searchedVideos?.map((video) => (
+              <Video videoUrl={video?.item?.videoUrl} id={video?.item?.id} />
             ))}
           </div>
         )}
@@ -130,4 +112,4 @@ function Videos() {
   );
 }
 
-export default Videos;
+export default SearchVideos;

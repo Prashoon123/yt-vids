@@ -17,7 +17,7 @@ function Home() {
           <h1 className="text-4xl font-bold w-96">
             Save your favorite YT Videos
           </h1>
-          <p className="mt-4 text-lg">Like this one is my favorite!</p>
+          <p className="mt-4 text-lg">Like this video is my favorite!</p>
         </div>
         <iframe
           width="650"

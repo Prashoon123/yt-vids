@@ -13,7 +13,11 @@ function Header() {
   return (
     <header className="sticky z-50 top-0 w-full p-4 flex justify-between items-center bg-black">
       <Link href="/">
-        <img src="/logo.png" alt="logo" className="h-16 w-16 object-contain cursor-pointer" />
+        <img
+          src="/logo.png"
+          alt="logo"
+          className="h-16 w-16 object-contain cursor-pointer"
+        />
       </Link>
 
       <div className="flex justify-between">
@@ -27,26 +31,28 @@ function Header() {
           </button>
         </Link>
 
-        {user ? (
-          <Link href="/videos">
-            <button
-              className={`navbar-button ${
-                location === "/videos" && "bg-[#00C85F] p-2 px-4 text-black"
-              }`}
-            >
-              My Videos
-            </button>
-          </Link>
-        ) : (
-          <Link href="/login">
-            <button
-              className={`navbar-button ${
-                location === "/login" && "bg-[#00C85F] p-2 px-4 text-black"
-              }`}
-            >
-              Login
-            </button>
-          </Link>
+        {user && (
+          <>
+            <Link href="/videos">
+              <button
+                className={`navbar-button ${
+                  location === "/videos" && "bg-[#00C85F] p-2 px-4 text-black"
+                }`}
+              >
+                My Videos
+              </button>
+            </Link>
+
+            <Link href="/search-videos">
+              <button
+                className={`navbar-button ${
+                  location === "/search-videos" && "bg-[#00C85F] p-2 px-4 text-black"
+                }`}
+              >
+                Search Videos
+              </button>
+            </Link>
+          </>
         )}
 
         <Link href="/donate">
@@ -59,18 +65,19 @@ function Header() {
           </button>
         </Link>
 
-        {user && (
-          // <a title="Click to logout" className="cursor-pointer">
-          //   <img
-          //     src={user?.photoURL}
-          //     alt="avatar"
-          //     className="h-10 w-10 object-contain rounded-full m-2 mx-4"
-          //     onClick={() => signOut(auth)}
-          //   />
-          // </a>
-
-          <Menu />
+        {!user && (
+          <Link href="/login">
+            <button
+              className={`navbar-button ${
+                location === "/login" && "bg-[#00C85F] p-2 px-4 text-black"
+              }`}
+            >
+              Login
+            </button>
+          </Link>
         )}
+
+        {user && <Menu />}
       </div>
     </header>
   );

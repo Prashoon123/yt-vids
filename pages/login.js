@@ -2,19 +2,24 @@ import Header from "../components/Header";
 import { signInWithPopup } from "firebase/auth";
 import { googleAuthProvider, auth, db } from "../config/firebase";
 import { doc, setDoc } from "firebase/firestore";
+import toast, { Toaster } from "react-hot-toast";
 
 function Login() {
   const login = () => {
-    signInWithPopup(auth, googleAuthProvider).then(async (authUser) => {
-      const user = authUser.user;
+    signInWithPopup(auth, googleAuthProvider)
+      .then(async (authUser) => {
+        const user = authUser.user;
 
-      await setDoc(doc(db, "users", user.uid), {
-        displayName: user.displayName,
-        email: user.email,
-        uid: user.uid,
-        photoURL: user.photoURL,
+        await setDoc(doc(db, "users", user.uid), {
+          displayName: user.displayName,
+          email: user.email,
+          uid: user.uid,
+          photoURL: user.photoURL,
+        });
+      })
+      .catch((err) => {
+        return toast.error("Login cancelled!");
       });
-    });
   };
 
   return (
@@ -32,6 +37,8 @@ function Login() {
           </button>
         </div>
       </div>
+
+      <Toaster />
     </div>
   );
 }

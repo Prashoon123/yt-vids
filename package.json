@@ -10,6 +10,7 @@
     "@heroicons/react": "^1.0.5",
     "better-react-spinkit": "^2.0.4",
     "firebase": "^9.6.0",
+    "fuse.js": "^6.4.6",
     "next": "latest",
     "nextjs-progressbar": "^0.0.13",
     "prop-types": "^15.7.2",
