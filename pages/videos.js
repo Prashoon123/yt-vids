@@ -79,7 +79,7 @@ function Videos() {
         <form onSubmit={addVideo}>
           <div className="m-6 flex justify-center items-center flex-col">
             <label for="videoTitle" className="text-sm font-medium mb-2">
-              Enter video title
+              Enter the video's title
             </label>
             <input
               type="text"
@@ -92,7 +92,7 @@ function Videos() {
           </div>
           <div className="m-6 flex justify-center items-center flex-col">
             <label for="videoUrl" className="text-sm font-medium mb-2">
-              Enter video url
+              Enter the video's url
             </label>
             <input
               type="text"

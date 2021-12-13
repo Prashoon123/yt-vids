@@ -55,8 +55,6 @@ function SearchVideos() {
       });
     });
 
-    console.log(searchVideos);
-
     const fuse = new Fuse(searchVideos, {
       keys: ["title"],
       includeScore: true,
