@@ -11,6 +11,10 @@ export default function MenuComponent() {
   const [user, loading, error] = useAuthState(auth);
 
   const deleteAccount = () => {
+    const sure = confirm("Are you sure that you want to delete this account?")
+
+    if(sure === false) return;
+
     deleteUser(auth?.currentUser)
       .then(() => {
         deleteDoc(doc(db, "users", user?.uid));
@@ -18,8 +22,6 @@ export default function MenuComponent() {
       .catch((err) => {
         return toast.error("Recent login is needed to delete the account!");
       });
-
-    toast.success("Deleted account successfully!");
   };
 
   return (
