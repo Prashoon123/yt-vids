@@ -14,9 +14,9 @@
 
 ### 🏠 [Homepage](https://yt-vids.vercel.app/)
 
-### ✨ [Demo on YouTube](https://www.youtube.com/watch?v=mYtPcQ03BNo) -
+### ✨ [Demo on YouTube](https://www.youtube.com/watch?v=f2GhCtG3atE) -
 
-[![Demo on YouTube](https://img.youtube.com/vi/mYtPcQ03BNo/0.jpg)](https://www.youtube.com/watch?v=mYtPcQ03BNo)
+[![Demo on YouTube](https://img.youtube.com/vi/f2GhCtG3atE/0.jpg)](https://www.youtube.com/watch?v=f2GhCtG3atE)
 
 ## Install
 
